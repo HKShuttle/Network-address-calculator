@@ -1,7 +1,7 @@
-<html>
+<html lang="ja">
     <head>
         <title>Network address Calculator</title>
-        <style>body{margin: 0; font-family: monospace; font-size: 1.7em;};</style>
+        <style>body{margin: 0; font-family: monospace; font-size: 1.7em;}</style>
         <meta charset="UTF-8">
 </head>
     <body>
@@ -15,11 +15,14 @@
 
 
                 <div id="userInput">
-                    <label>Ip Address:</label>
+                    <label for="ip">IP Address:</label>
                     <input type="text" id="ip">
-                    <span>/</span>
+                    <select id="mode">
+                        <option value = "0">Prefix Length: </option>
+                        <option value = "1">Subnet Mask: </option>
+                    </select>
                     <input type="text" id="cidr" size=2>
-                    <input type="button" type="number" id="calculate" value="計算">
+                    <input type="button" id="calculate" value="RUN">
                     
                     
                     <br>
@@ -29,17 +32,21 @@
 
 
                 <div id="ipCalc">
-                    <h4>IP Calculate:</h4>
-                    <span id="ip_bin">　</span>
+                    <h4>Result:</h4>
+                    <div id="ip_bin">　</div>
                     <span>　←　IP</span>
                     <br>
-                    <span id="cidr_bin_copy">　</span>
+                    <div id="cidr_bin_copy">　</div>
                     <span>　←　Subnet mask</span>
                     <br>
 
 
                     <span id="networkPart" style="color: red;"></span><!--
                     --><span id="hostPart" style="color: lightseagreen;"></span>
+                    <div id="addrwidth">
+                        <div style="color: red;float:left">NW part</div><!--
+                   --><div style="color: lightseagreen;text-align: right">Host part</div>
+                    </div>
                    
                     <br><br>
                     <span id="networkAddr"></span><span>　←　Network Address</span><br>
@@ -60,7 +67,7 @@
 
 
             <div name="cidrCalc" style="margin-left: 20px; padding-top: 4px;">
-                <span>→ Subnet mask: </span>
+                <span id="netmask">→ Subnet mask: </span>
                 <br>
                 <span id="cidr_bin">　</span>
                 <br>
@@ -108,16 +115,47 @@
     const OUT_lastHost = document.getElementById('lastHost');
     const OUT_lastHostDec = document.getElementById('lastHostDec');
 
-    ipInput.onkeyup = function () {
+    // Modified by HK_Shuttle
+    const modeMenu = document.getElementById('mode');
+    const netmask = document.getElementById('netmask');
+    let mode;
+
+    /*ipInput.onkeyup = function () {
         calc();
     }
     
     cidrInput.onkeyup = function () {
         calc();
+    }*/
+
+    // Mode button onclick event
+    modeMenu.onchange = function () {
+        if (modeMenu.value === "0") {
+            mode = 0;
+            cidrInput.size = 2;
+            cidrInput.value = null;
+            netmask.innerText = "→ Subnet mask: ";
+        } else {
+            mode = 1;
+            cidrInput.size = 16;
+            cidrInput.value = null;
+            netmask.innerText = "→ Prefix length: ";
+        }
     }
+
+
     // Calculate button onclick event
     calcButton.onclick = function () {
-        calc();
+        if(mode === 0){
+            calc();
+        } else {
+            if(isNetMask(cidrInput.value)){
+                calc();
+            } else {
+                judge.innerText = "";
+                errmsg.innerText = "NetMask seems wrong!";
+            }
+        }
     }
 
     var calc = function () {
@@ -125,7 +163,12 @@
         errmsg.innerText = "　";
         judge.innerText = "　";
         var IP = ipInput.value;
-        var cidr = cidrInput.value;
+        var cidr;
+        if(mode === 0){
+            cidr = cidrInput.value;
+        } else {
+            cidr = netMaskToCidr(cidrInput.value);
+        }
 
 
         // Input check
@@ -158,6 +201,9 @@
         var ip_bin = decToBin(IpArray);         // 1011.1010.0001.1010
         var cidr_bin = cidrToGroupBin(cidr);    // 1111.1111.1111.0000
         var cidr_dec = binToDec(cidr_bin);      // 255.255.255.0
+        if (mode !== 0) {
+            cidr_dec = cidr;
+        }
 
         OUT_ip_bin.innerText = ip_bin;
         OUT_cidr_bin.innerText = cidr_bin;
@@ -192,6 +238,7 @@
             }
 
             OUT_hostPart.innerText = _hostInner;
+            document.getElementById("addrwidth").style.width = document.getElementById("ip_bin").clientWidth;
         }
         
         // Calculate network addr & broadcast addr
@@ -242,6 +289,50 @@ function isIpAddress(str) {
 function isCidr(str) {
     var CIDRreg = /^([1-9]|1\d|2\d|30)$/;
     return CIDRreg.test(str);
+}
+
+function isNetMask(str){
+    if (!isIpAddress(str)){
+        return false;
+    }
+    let _netMask = str.split(".");
+    for (let i = 0; i < _netMask.length; i++) {
+        if(_netMask[i] !== "0" &&
+            _netMask[i] !== "128" &&
+            _netMask[i] !== "192" &&
+            _netMask[i] !== "224" &&
+            _netMask[i] !== "240" &&
+            _netMask[i] !== "248" &&
+            _netMask[i] !== "252" &&
+            _netMask[i] !== "254" &&
+            _netMask[i] !== "255"){
+            return false;
+        }
+    }
+    return true;
+}
+
+function netMaskToCidr(str){
+    let _netMask = str.split(".");
+    let n = 0;
+    for (let i = 0; i < _netMask.length; i++) {
+        let m = parseInt(_netMask[i]);
+        n += bitCount(m);
+        if (m < 255){
+            break;
+        }
+    }
+    return n.toString();
+}
+
+function bitCount(octet){
+    let num = 0;
+    let mask = 1;
+    while(octet > 0){
+        num += octet & mask;
+        octet = octet >>> 1;
+    }
+    return num;
 }
 
 function cidrToBin(_cidr) {
