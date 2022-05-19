@@ -311,7 +311,15 @@ function isNetMask(str){
             _netMask[i] !== "255"){
             return false;
         }
+        let m = parseInt(_netMask[i]);
+        if (i > 0) {
+            let n = parseInt(_netMask[i - 1]);
+            if (n < 255 && m > 0){
+                return false;
+            }
+        }
     }
+
     return true;
 }
 
