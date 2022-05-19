@@ -1,4 +1,5 @@
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <title>Network address Calculator</title>
         <style>body{margin: 0; font-family: monospace; font-size: 1.7em;}</style>
@@ -33,20 +34,22 @@
 
                 <div id="ipCalc">
                     <h4>Result:</h4>
-                    <div id="ip_bin">　</div>
+                    <div id="ip_bin" style="width: fit-content; float: left">　</div>
                     <span>　←　IP</span>
                     <br>
-                    <div id="cidr_bin_copy">　</div>
+                    <div id="cidr_bin_copy" style="width: fit-content; float: left;">　</div>
                     <span>　←　Subnet mask</span>
                     <br>
 
-
-                    <span id="networkPart" style="color: red;"></span><!--
+                    <div style="width: fit-content">
+                        <span id="networkPart" style="color: red;"></span><!--
                     --><span id="hostPart" style="color: lightseagreen;"></span>
-                    <div id="addrwidth">
-                        <div style="color: red;float:left">NW part</div><!--
+                        <div id="addrwidth" style="width: 100%">
+                            <div style="color: red;float:left">NW part</div><!--
                    --><div style="color: lightseagreen;text-align: right">Host part</div>
+                        </div>
                     </div>
+
                    
                     <br><br>
                     <span id="networkAddr"></span><span>　←　Network Address</span><br>
@@ -118,7 +121,7 @@
     // Modified by HK_Shuttle
     const modeMenu = document.getElementById('mode');
     const netmask = document.getElementById('netmask');
-    let mode;
+    let mode = 0;
 
     /*ipInput.onkeyup = function () {
         calc();
@@ -238,7 +241,7 @@
             }
 
             OUT_hostPart.innerText = _hostInner;
-            document.getElementById("addrwidth").style.width = document.getElementById("ip_bin").clientWidth;
+            // document.getElementById("addrwidth").style.width = document.getElementById("ip_bin").clientWidth;
         }
         
         // Calculate network addr & broadcast addr
