@@ -156,7 +156,7 @@
                 calc();
             } else {
                 judge.innerText = "";
-                errmsg.innerText = "NetMask seems wrong!";
+                errmsg.innerText = "Invalid Subnet Mask";
             }
         }
     }
@@ -176,11 +176,11 @@
 
         // Input check
         if (!isIpAddress(IP)) {
-            errmsg.innerText = "IP address seems wrong!!";
+            errmsg.innerText = "Invalid IP Address";
             return;
         }
         if (!isCidr(cidr)) {
-            errmsg.innerText = "CIDR seems wrong!!";
+            errmsg.innerText = "Invalid Prefix Length";
             return;
         }
 
