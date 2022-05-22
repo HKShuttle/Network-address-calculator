@@ -1,106 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Network address Calculator</title>
-        <style>body{margin: 0; font-family: monospace; font-size: 1.7em;} a{color: darksalmon;}</style>
-        <meta charset="UTF-8">
+<head>
+    <title>Network address Calculator</title>
+    <style>body {
+        margin: 0;
+        font-family: monospace;
+        font-size: 1.7em;
+    }
+
+    a {
+        color: darksalmon;
+    }</style>
+    <meta charset="UTF-8">
 </head>
-    <body>
+<body>
 
-        <h1>Network address Calculator</h1>
-        <hr>
+<h1>Network address Calculator</h1>
+<hr>
 
-        <div style="display: flex">
+<div style="display: flex">
 
-            <div style="display: block">
-
-
-                <div id="userInput">
-                    <label for="ip">IP Address:</label>
-                    <input type="text" id="ip">
-                    <select id="mode">
-                        <option value = "0">Prefix Length: </option>
-                        <option value = "1">Subnet Mask: </option>
-                    </select>
-                    <input type="text" id="cidr" size=2>
-                    <input type="button" id="calculate" value="RUN">
-                    
-                    
-                    <br>
-                    <span id="judge" style="color: orangered;">　</span><br>
-                    <span id="errmsg" style="color: red;">　</span>
-                </div>
+    <div style="display: block">
 
 
-                <div id="ipCalc">
-                    <h4>Result:</h4>
-                    <div id="ip_bin" style="width: fit-content; float: left">　</div>
-                    <span>　←　IP</span>
-                    <br>
-                    <div id="cidr_bin_copy" style="width: fit-content; float: left;">　</div>
-                    <span>　←　Subnet mask</span>
-                    <br>
+        <div id="userInput">
+            <label for="ip">IP Address:</label>
+            <input type="text" id="ip">
+            <select id="mode">
+                <option value="lengthToMask">Prefix Length:</option>
+                <option value="maskToLength">Subnet Mask:</option>
+            </select>
+            <input type="text" id="cidr" size=2>
+            <input type="button" id="calculate" value="RUN">
 
-                    <div style="width: fit-content">
-                        <span id="networkPart" style="color: red;"></span><!--
+
+            <br>
+            <span id="addressType" style="color: orangered;">　</span><br>
+            <span id="errMsg" style="color: red;">　</span>
+        </div>
+
+
+        <div id="ipCalc">
+            <h4>Result:</h4>
+            <div id="ip_bin" style="width: fit-content; float: left">　</div>
+            <span>　←　IP</span>
+            <br>
+            <div id="cidr_bin_copy" style="width: fit-content; float: left;">　</div>
+            <span>　←　Subnet mask</span>
+            <br>
+
+            <div style="width: fit-content">
+                <span id="networkPart" style="color: red;"></span><!--
                     --><span id="hostPart" style="color: lightseagreen;"></span>
-                        <div id="addrwidth" style="width: 100%">
-                            <div style="color: red;float:left">NW part</div><!--
-                   --><div style="color: lightseagreen;text-align: right">Host part</div>
-                        </div>
-                    </div>
-
-                   
-                    <br><br>
-                    <span id="networkAddr"></span><span>　←　Network Address</span><br>
-                    <div align="right" id="networkAddrDec"></div>
-                    <span id="firstHost"></span><span>　←　First host address</span><br>
-                    <div align="right" id="firstHostDec"></div>
-                    <span>...</span><br>
-                    <span id="lastHost"></span><span>　←　Last host address</span><br>
-                    <div align="right" id="lastHostDec"></div>
-                    <span id="broadcastAddr"></span><span>　←　Broadcast Address</span>
-                    <div align="right" id="broadcastAddrDec"></div>
-
+                <div id="addrwidth" style="width: 100%">
+                    <div style="color: red;float:left">NW part</div><!--
+                   -->
+                    <div style="color: lightseagreen;text-align: right">Host part</div>
                 </div>
-
-            
             </div>
 
 
+            <br><br>
+            <span id="networkAddr"></span><span>　←　Network Address</span><br>
+            <div align="right" id="networkAddrDec"></div>
+            <span id="firstHost"></span><span>　←　First host address</span><br>
+            <div align="right" id="firstHostDec"></div>
+            <span>...</span><br>
+            <span id="lastHost"></span><span>　←　Last host address</span><br>
+            <div align="right" id="lastHostDec"></div>
+            <span id="broadcastAddr"></span><span>　←　Broadcast Address</span>
+            <div align="right" id="broadcastAddrDec"></div>
 
-            <div name="cidrCalc" style="margin-left: 20px; padding-top: 4px;">
-                <span id="netmask">→ Subnet mask: </span>
-                <br>
-                <span id="cidr_bin">　</span>
-                <br>
-                <span>↓ To dec:</span>
-                <br>
-                <span id="cidr_dec">　</span>
-            </div>
-
-            
         </div>
 
 
-        <div style="position: absolute; background-color: black; height: 20px; width: 100%; text-align: center; bottom: 0;">
+    </div>
+
+
+    <div style="margin-left: 20px; padding-top: 4px;">
+        <span id="netmask">→ Subnet mask: </span>
+        <br>
+        <span id="cidr_bin">　</span>
+        <br>
+        <span>↓ To dec:</span>
+        <br>
+        <span id="cidr_dec">　</span>
+    </div>
+
+
+</div>
+
+
+<div style="position: absolute; background-color: black; height: 20px; width: 100%; text-align: center; bottom: 0;">
             <span id="copyright" style="color: whitesmoke; font-size: .8em;">
-                Modified by <a href="https://github.com/HKShuttle/Network-address-calculator">&#064;HK_Shuttle</a>, Original Code by <a href="https://github.com/salschoka/Network-address-calculator">salschoka & H-kys</a>
+                Modified by <a href="https://github.com/HKShuttle/Network-address-calculator">&#064;HK_Shuttle</a>, Original Code by <a
+                    href="https://github.com/salschoka/Network-address-calculator">salschoka & H-kys</a>
             </span>
-        </div>
+</div>
 
-    </body>
-
+</body>
 
 
 <script>
     // Initialize obj
-    const judge = document.getElementById('judge');
-    const errmsg = document.getElementById('errmsg');
-    const calcButton = document.getElementById("calculate");
-    const ipInput = document.getElementById('ip');
-    const cidrInput = document.getElementById('cidr');
-    
+    const ADDRESS_TYPE = document.getElementById('addressType');
+    const ERR_MSG = document.getElementById('errMsg');
+    const CALC_BUTTON = document.getElementById("calculate");
+    const IP_INPUT = document.getElementById('ip');
+    const PREFIX_LENGTH_INPUT = document.getElementById('cidr');
+
     const OUT_cidr_bin = document.getElementById('cidr_bin');
     const OUT_cidr_dec = document.getElementById('cidr_dec');
     const OUT_ip_bin = document.getElementById('ip_bin');
@@ -118,313 +126,298 @@
     const OUT_lastHost = document.getElementById('lastHost');
     const OUT_lastHostDec = document.getElementById('lastHostDec');
 
-    // Modified by HK_Shuttle
-    const modeMenu = document.getElementById('mode');
-    const netmask = document.getElementById('netmask');
-    let mode = 0;
-
-    /*ipInput.onkeyup = function () {
-        calc();
-    }
-    
-    cidrInput.onkeyup = function () {
-        calc();
-    }*/
+    const MODE_MENU = document.getElementById('mode');
+    const NETMASK = document.getElementById('netmask');
 
     // Mode button onclick event
-    modeMenu.onchange = function () {
-        if (modeMenu.value === "0") {
-            mode = 0;
-            cidrInput.size = 2;
-            cidrInput.value = null;
-            netmask.innerText = "→ Subnet mask: ";
+    MODE_MENU.onchange = function () {
+        if (MODE_MENU.value === "lengthToMask") {
+            PREFIX_LENGTH_INPUT.size = 2;
+            PREFIX_LENGTH_INPUT.value = null;
+            NETMASK.innerText = "→ Subnet mask: ";
         } else {
-            mode = 1;
-            cidrInput.size = 16;
-            cidrInput.value = null;
-            netmask.innerText = "→ Prefix length: ";
+            PREFIX_LENGTH_INPUT.size = 16;
+            PREFIX_LENGTH_INPUT.value = null;
+            NETMASK.innerText = "→ Prefix length: ";
         }
     }
-
 
     // Calculate button onclick event
-    calcButton.onclick = function () {
-        if(mode === 0){
-            calc();
-        } else {
-            if(isNetMask(cidrInput.value)){
-                calc();
+    CALC_BUTTON.onclick = function () {
+        // initialize
+        let ipAddress = IP_INPUT.value;
+        let prefixLength;
+        ERR_MSG.innerText = "　";
+        ADDRESS_TYPE.innerText = "　";
+
+        // validate ipAddress
+        if (!isValidAddressExpression(ipAddress)) {
+            ERR_MSG.innerText = "Invalid IP Address";
+            return;
+        }
+
+        // validate netMask
+        if (MODE_MENU.value === "maskToLength" && !(isValidNetMask(PREFIX_LENGTH_INPUT.value))) {
+            ERR_MSG.innerText = "Invalid Subnet Mask";
+            return;
+        }
+
+        // set prefix
+        if (MODE_MENU.value === "lengthToMask") {
+            prefixLength = PREFIX_LENGTH_INPUT.value;
+        } else if (MODE_MENU.value === "maskToLength") {
+            prefixLength = netMaskToPrefixInt(PREFIX_LENGTH_INPUT.value);
+        }
+
+        // check prefix
+        if (!isValidPrefixExpression(prefixLength)) {
+            ERR_MSG.innerText = "Invalid Prefix Length";
+            return;
+        }
+
+        // convert input value into int
+        let IpArray = parseAddressToIntArray(ipAddress);
+        prefixLength = parseInt(prefixLength);
+        /*End of Input to Int
+        ----------------------
+        prefixLength: int
+        IpArray[]: int
+        ipAddress: string*/
+
+        // Output basic result
+        OUT_ip_bin.innerText = decToBin(IpArray);// 1011.1010.0001.1010
+        OUT_cidr_bin.innerText = cidrToGroupBin(prefixLength);// 1111.1111.1111.0000
+        document.getElementById("cidr_bin_copy").innerText = cidrToGroupBin(prefixLength);// 1111.1111.1111.0000
+        if (MODE_MENU.value === "lengthToMask") {
+            OUT_cidr_dec.innerText = binToDec(cidrToGroupBin(prefixLength));// 255.255.255.0
+        } else if (MODE_MENU.value === "maskToLength") {
+            OUT_cidr_dec.innerText = prefixLength;// 24
+        }
+
+        // draw underline
+        OUT_networkPart.innerText = getUnderline(prefixLength)[0];
+        OUT_hostPart.innerText = getUnderline(prefixLength)[1];
+
+        // determine address type
+        ADDRESS_TYPE.innerText = getAddressTypeText(decToBin(IpArray).replace(/\./g, ""), prefixLength);
+
+        // write network address
+        let networkAddress = calculateAddress(decToBin(IpArray).replace(/\./g, ""), prefixLength, "0");
+        OUT_networkAddr.innerText = networkAddress;
+        OUT_networkAddrDec.innerText = binToDec(networkAddress);
+
+        // write broadcast address
+        let broadcastAddress = calculateAddress(decToBin(IpArray).replace(/\./g, ""), prefixLength, 1);
+        OUT_broadcastAddr.innerText = broadcastAddress;
+        OUT_broadcastAddrDec.innerText = binToDec(broadcastAddress);
+
+        // write first host address
+        let firstHostAddress = networkAddress.substr(0, networkAddress.length - 1) + "1";
+        OUT_firstHost.innerText = firstHostAddress;
+        OUT_firstHostDec.innerText = binToDec(firstHostAddress);
+
+        // write last host address
+        let lastHostAddress = broadcastAddress.substr(0, broadcastAddress.length - 1) + "0";
+        OUT_lastHost.innerText = lastHostAddress;
+        OUT_lastHostDec.innerText = binToDec(lastHostAddress);
+    }
+
+    function getUnderline(prefixLength) {
+        let networkPart = "";
+        for (let i = 0; i < prefixLength; i++) {
+            networkPart += "-";
+        }
+        if (prefixLength === 8) {
+            networkPart += " ";
+        } else if (prefixLength === 16) {
+            networkPart += "-";
+            networkPart += " ";
+        } else if (prefixLength === 24) {
+            networkPart += "--";
+            networkPart += " ";
+        } else if (prefixLength > 8 && prefixLength < 16) {
+            networkPart += "-";
+        } else if (prefixLength > 16 && prefixLength < 24) {
+            networkPart += "--";
+        } else if (prefixLength > 24) {
+            networkPart += "---";
+        }
+
+        let hostPart = "";
+        for (let i = 0; i < (35 - networkPart.length); i++) {
+            hostPart += "-";
+        }
+
+        return [networkPart, hostPart];
+    }
+
+    function calculateAddress(ipAddress, prefixLength, paddingValue) {
+        let networkPart = ipAddress.substr(0, prefixLength);
+        let hostPart = paddingValue.toString();
+        hostPart = hostPart.repeat(32 - prefixLength);
+        return binAddDot(networkPart + hostPart);
+    }
+
+    function getAddressTypeText(ipAddressBin, prefixLength) {
+        let hostSection = ipAddressBin.substr(prefixLength, 32);
+        if (hostSection.includes("1")) {
+            if (hostSection.includes("0")) {
+                return "This is a host address.";
             } else {
-                judge.innerText = "";
-                errmsg.innerText = "Invalid Subnet Mask";
+                return "This is a broadcast address.";
             }
+        } else {
+            return "This is a network address.";
         }
     }
 
-    var calc = function () {
-        // Get value & Init error message
-        errmsg.innerText = "　";
-        judge.innerText = "　";
-        var IP = ipInput.value;
-        var cidr;
-        if(mode === 0){
-            cidr = cidrInput.value;
-        } else {
-            cidr = netMaskToCidr(cidrInput.value);
-        }
-
-
-        // Input check
-        if (!isIpAddress(IP)) {
-            errmsg.innerText = "Invalid IP Address";
-            return;
-        }
-        if (!isCidr(cidr)) {
-            errmsg.innerText = "Invalid Prefix Length";
-            return;
-        }
-
-
-        // Input to Int
-        var IpArray_Str = IP.split('.');
-        var IpArray = [];
+    function parseAddressToIntArray(ipAddress) {
+        let IpArray_Str = ipAddress.split('.');
+        let IpArray = [];
         IpArray_Str.forEach(element => {
             IpArray.push(parseInt(element))
         });
-
-        var cidr = parseInt(cidr);
-        // End of Input to Int
-        // ----------------------
-        // cidr: int
-        // IpArray[]: int
-        // IP: string
-
-
-        // Output basic result
-        var ip_bin = decToBin(IpArray);         // 1011.1010.0001.1010
-        var cidr_bin = cidrToGroupBin(cidr);    // 1111.1111.1111.0000
-        var cidr_dec = binToDec(cidr_bin);      // 255.255.255.0
-        if (mode !== 0) {
-            cidr_dec = cidr;
-        }
-
-        OUT_ip_bin.innerText = ip_bin;
-        OUT_cidr_bin.innerText = cidr_bin;
-        document.getElementById("cidr_bin_copy").innerText = cidr_bin;
-        OUT_cidr_dec.innerText = cidr_dec;
-
-        // Network/Host Part Line
-        {
-            var _inner = ""
-            for (var i = 0; i < cidr; i++) {
-                _inner += "-";
-            }
-            if (cidr === 8) {
-                _inner += " ";
-            }else if (cidr === 16) {
-                _inner += "-";
-                _inner += " ";
-            }else if (cidr === 24) {
-                _inner += "--";
-                _inner += " ";
-            } else if (cidr > 8 && cidr < 16) {
-                _inner += "-";
-            } else if (cidr > 16 && cidr < 24) {
-                _inner += "--";
-            } else if (cidr > 24) {
-                _inner += "---";
-            }
-            OUT_networkPart.innerText = _inner;
-            var _hostInner = "";
-            for (var i = 0; i<(35-_inner.length); i++) {
-                _hostInner += "-";
-            }
-
-            OUT_hostPart.innerText = _hostInner;
-            // document.getElementById("addrwidth").style.width = document.getElementById("ip_bin").clientWidth;
-        }
-        
-        // Calculate network addr & broadcast addr
-        //Calc net addr
-        var _ip_bin = ip_bin.replace(/\./g, "");
-        var _ip_network = _ip_bin.substr(0,cidr);
-        
-        var _ip_host="0";
-        _ip_host = _ip_host.repeat(32-cidr);
-
-        var _ip_net_addr = _ip_network + _ip_host;
-        var _ip_broad_addr = _ip_network + _ip_host.replace(/0/g,"1");
-
-        var _ip_firsthost = _ip_net_addr.substr(0, _ip_net_addr.length-1) + "1";
-        var _ip_lasthost = _ip_broad_addr.substr(0, _ip_broad_addr.length-1) + "0";
-        
-        OUT_networkAddr.innerText = binAddDot(_ip_net_addr);
-        OUT_broadcastAddr.innerText = binAddDot(_ip_broad_addr);
-
-        OUT_networkAddrDec.innerText = binToDec(binAddDot(_ip_net_addr));
-        OUT_broadcastAddrDec.innerText = binToDec(binAddDot(_ip_broad_addr));
-                
-        OUT_firstHost.innerText = binAddDot(_ip_firsthost);
-        OUT_lastHost.innerText = binAddDot(_ip_lasthost);
-        
-        OUT_firstHostDec.innerText = binToDec(binAddDot(_ip_firsthost));
-        OUT_lastHostDec.innerText = binToDec(binAddDot(_ip_lasthost));
-
-        // Judge TIME!
-        var _Jip_host = _ip_bin.substr(cidr,32);
-        if (_Jip_host.includes("1")) {
-            if (_Jip_host.includes("0")) {
-                judge.innerText = "This is a host address.";
-            } else {
-                judge.innerText = "This is a broadcast address.";
-            }
-        } else {
-            judge.innerText = "This is a network address.";
-        }
-
+        return IpArray;
     }
 
-function isIpAddress(str) {
-    var IPreg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-    return IPreg.test(str);
-}
-
-function isCidr(str) {
-    var CIDRreg = /^([1-9]|1\d|2\d|30)$/;
-    return CIDRreg.test(str);
-}
-
-function isNetMask(str){
-    if (!isIpAddress(str)){
-        return false;
+    function isValidAddressExpression(str) {
+        const VALID_ADDRESS_REGEX = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+        return VALID_ADDRESS_REGEX.test(str);
     }
-    let _netMask = str.split(".");
-    for (let i = 0; i < _netMask.length; i++) {
-        if(_netMask[i] !== "0" &&
-            _netMask[i] !== "128" &&
-            _netMask[i] !== "192" &&
-            _netMask[i] !== "224" &&
-            _netMask[i] !== "240" &&
-            _netMask[i] !== "248" &&
-            _netMask[i] !== "252" &&
-            _netMask[i] !== "254" &&
-            _netMask[i] !== "255"){
+
+    function isValidPrefixExpression(str) {
+        const VALID_PREFIX_REGEX = /^([1-9]|1\d|2\d|30)$/;
+        return VALID_PREFIX_REGEX.test(str);
+    }
+
+    function isValidNetMask(str) {
+        if (!isValidAddressExpression(str)) {
             return false;
         }
-        let m = parseInt(_netMask[i]);
-        if (i > 0) {
-            let n = parseInt(_netMask[i - 1]);
-            if (n < 255 && m > 0){
+        let netMask = str.split(".");
+        for (let i = 0; i < netMask.length; i++) {
+            if (netMask[i] !== "0" &&
+                netMask[i] !== "128" &&
+                netMask[i] !== "192" &&
+                netMask[i] !== "224" &&
+                netMask[i] !== "240" &&
+                netMask[i] !== "248" &&
+                netMask[i] !== "252" &&
+                netMask[i] !== "254" &&
+                netMask[i] !== "255") {
                 return false;
             }
+            let m = parseInt(netMask[i]);
+            if (i > 0) {
+                let n = parseInt(netMask[i - 1]);
+                if (n < 255 && m > 0) {
+                    return false;
+                }
+            }
         }
+
+        return true;
     }
 
-    return true;
-}
-
-function netMaskToCidr(str){
-    let _netMask = str.split(".");
-    let n = 0;
-    for (let i = 0; i < _netMask.length; i++) {
-        let m = parseInt(_netMask[i]);
-        n += bitCount(m);
-        if (m < 255){
-            break;
+    function netMaskToPrefixInt(str) {
+        let netMask = str.split(".");
+        let n = 0;
+        for (let i = 0; i < netMask.length; i++) {
+            let m = parseInt(netMask[i]);
+            n += bitCount(m);
+            if (m < 255) {
+                break;
+            }
         }
+        return n.toString();
     }
-    return n.toString();
-}
 
-function bitCount(octet){
-    let num = 0;
-    let mask = 1;
-    while(octet > 0){
-        num += octet & mask;
-        octet = octet >>> 1;
-    }
-    return num;
-}
-
-function cidrToBin(_cidr) {
-    var _result = "";
-    for (var i = 0; i < _cidr; i++) {
-        _result = _result.concat("1");
-    }
-    for (var i = 0; i < 32-_cidr; i++) {
-        _result = _result.concat("0");
-    }
-    return _result;
-}
-
-function cidrToGroupBin(_cidr) {
-    var _cidr_bin = cidrToBin(_cidr);
-
-    _result = "";
-    for (var i = 0; i < 4; i++) {
-        if (i != 3) {
-            _result = _result.concat(_cidr_bin.slice(8*i,8*(i+1))+".");
-        } else {
-            _result = _result.concat(_cidr_bin.slice(8*i,8*(i+1)));
+    function bitCount(octet) {
+        let num = 0;
+        let mask = 1;
+        while (octet > 0) {
+            num += octet & mask;
+            octet = octet >>> 1;
         }
-    }
-    return _result;
-}
-
-function binAddDot(str) {
-    if (str.length != 32) {
-        return;
+        return num;
     }
 
-    var _result = "";
-    for (var i = 0; i < 4; i++) {
-        if (i != 3) {
-            _result += str.slice(8*i,8*(i+1))+".";
-        } else {
-            _result += str.slice(8*i,8*(i+1));
+    function cidrToBin(_cidr) {
+        let result = "";
+        for (let i = 0; i < _cidr; i++) {
+            result = result.concat("1");
         }
-    }
-    return _result;
-}
-
-/*
- *  [192,168,0,0] => 1010.1010.1010.1010
- *  @prama  array
- *  @return string
- */
-function decToBin(dec_array) {
-    var array = [];
-    dec_array.forEach((element) => {
-        var _octet = parseInt(element).toString(2);
-        var starting_zeros = "";
-        for(var i = 0; i < 8-_octet.length; i++) {
-            starting_zeros += "0";
+        for (let i = 0; i < 32 - _cidr; i++) {
+            result = result.concat("0");
         }
-        _octet = starting_zeros.concat(_octet);
-        array.push(_octet);
-    });
+        return result;
+    }
 
-    return array.join(".");
-}
+    function cidrToGroupBin(_cidr) {
+        let _cidr_bin = cidrToBin(_cidr);
 
-/*
- *  1010.1010.1010.1010 => 192.168.0.0
- *  @prama  string
- *  @return string
- */
-function binToDec(str) {
-    var array = [];
-    
-    var bin_array = str.split('.');
-    bin_array.forEach((element) => {
-        array.push(parseInt(element,2));
-    })
+        let result = "";
+        for (let i = 0; i < 4; i++) {
+            if (i !== 3) {
+                result = result.concat(_cidr_bin.slice(8 * i, 8 * (i + 1)) + ".");
+            } else {
+                result = result.concat(_cidr_bin.slice(8 * i, 8 * (i + 1)));
+            }
+        }
+        return result;
+    }
 
-    return array.join(".");
-}
+    function binAddDot(str) {
+        if (str.length !== 32) {
+            return;
+        }
 
+        let result = "";
+        for (let i = 0; i < 4; i++) {
+            if (i !== 3) {
+                result += str.slice(8 * i, 8 * (i + 1)) + ".";
+            } else {
+                result += str.slice(8 * i, 8 * (i + 1));
+            }
+        }
+        return result;
+    }
 
-    
+    /*
+     *  [192,168,0,0] => 1010.1010.1010.1010
+     *  @prama  array
+     *  @return string
+     */
+    function decToBin(dec_array) {
+        let array = [];
+        dec_array.forEach((element) => {
+            let _octet = parseInt(element).toString(2);
+            let starting_zeros = "";
+            for (let i = 0; i < 8 - _octet.length; i++) {
+                starting_zeros += "0";
+            }
+            _octet = starting_zeros.concat(_octet);
+            array.push(_octet);
+        });
+
+        return array.join(".");
+    }
+
+    /*
+     *  1010.1010.1010.1010 => 192.168.0.0
+     *  @prama  string
+     *  @return string
+     */
+    function binToDec(str) {
+        let array = [];
+        let bin_array = str.split('.');
+        bin_array.forEach((element) => {
+            array.push(parseInt(element, 2));
+        })
+
+        return array.join(".");
+    }
+
 </script>
 
 </html>
