@@ -2,15 +2,38 @@
 <html lang="en">
 <head>
     <title>Network address Calculator</title>
-    <style>body {
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Gothic&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <style>
+        body {
         margin: 0;
-        font-family: monospace;
+        font-family: "Sawarabi Gothic", sans-serif;
         font-size: 1.7em;
-    }
+        }
 
-    a {
+        h1 {
+            background-color: #00d1b2;
+            color: white;
+            margin: 0;
+        }
+
+        .result {
+            font-family: "Inconsolata", monospace;
+        }
+
+        #addrwidth {
+            font-family: "Sawarabi Gothic", sans-serif;
+            font-size: 0.9em;
+        }
+
+        #copyright {
+            height: fit-content;
+        }
+
+        #copyright a {
         color: darksalmon;
-    }</style>
+        }
+    </style>
     <meta charset="UTF-8">
 </head>
 <body>
@@ -18,7 +41,7 @@
 <h1>Network address Calculator</h1>
 <hr>
 
-<div style="display: flex">
+<div class="result" style="display: flex">
 
     <div style="display: block">
 
@@ -91,7 +114,7 @@
 </div>
 
 
-<div style="position: absolute; background-color: black; height: 20px; width: 100%; text-align: center; bottom: 0;">
+<div style="position: absolute; background-color: black; width: 100%; text-align: center; bottom: 0;">
             <span id="copyright" style="color: whitesmoke; font-size: .8em;">
                 Modified by <a href="https://github.com/HKShuttle/Network-address-calculator">&#064;HK_Shuttle</a>, Original Code by <a
                     href="https://github.com/salschoka/Network-address-calculator">salschoka & H-kys</a>
